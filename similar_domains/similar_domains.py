@@ -113,9 +113,3 @@ class Extractor:
     def run(self):
         self.format_key_words()
         self.scan()
-
-
-if __name__ == '__main__':
-    kw = ['vk']
-    extr = Extractor(key_words=kw)
-    extr.run()
