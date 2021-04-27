@@ -5,14 +5,7 @@ import string
 DOMAINS = ['com', 'ru', 'net', 'org', 'info', 'cn', 'es',
            'top', 'au', 'pl', 'it', 'uk', 'tk', 'ml', 'ga', 'cf', 'us', 'xyz', 'top', 'site', 'win', 'bid']
 PORT = 53
-SYMBOLS_TO_APPEND = [symb for symb in string.digits + string.ascii_letters]
-HOMOGLYPHS = {
-    '1': ['i', 'l'],
-    'i': ['1', 'l'],
-    'l': ['1', 'i'],
-    '0': ['o'],
-    'o': ['0'],
-}
+SYMBOLS_TO_APPEND = [symb for symb in string.digits + string.ascii_lowercase]
 
 
 def get_homoglyphs(word):
@@ -45,6 +38,8 @@ class DomainsChecker(threading.Thread):
             for dom in DOMAINS:
                 complete_host = host + '.' + dom
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                socket.setdefaulttimeout(0.150)
+
                 try:
                     ip = socket.gethostbyname(complete_host)
                     result = f'{complete_host} {ip}'
@@ -119,3 +114,8 @@ class Extractor:
         self.format_key_words()
         self.scan()
 
+
+if __name__ == '__main__':
+    kw = ['vk']
+    extr = Extractor(key_words=kw)
+    extr.run()
