@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import argparse
 from port_scanner import Extractor
 
