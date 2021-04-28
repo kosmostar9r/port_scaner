@@ -20,7 +20,12 @@ class PortScanner(threading.Thread):
             if sock.connect_ex((self.ip, port)):
                 pass
             else:
+                if port == 80 or port == 443:
+                    sock.send(b'')
+                    data = sock.recv(1024).decode()
+                    print(data)
                 result = f'{self.ip} {port} OPEN'
+                print(result)
                 self.results.append(result)
             sock.close()
 
@@ -58,10 +63,6 @@ class Extractor:
             scanner.start()
         for scanner in scanners:
             scanner.join()
-        for scanner in scanners:
-            if scanner.results:
-                for i in scanner.results:
-                    print(i)
         if all(len(scanner.results) == 0 for scanner in scanners):
             print('There is no opened ports')
 
