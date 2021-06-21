@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import asyncio
 from port_scanner import Extractor
 
 
@@ -29,7 +30,7 @@ class PortScannerManager:
 
         extractor = Extractor(start_ip=args.range_ip[0],
                               end_ip=args.range_ip[1], ports=ports)
-        extractor.run()
+        asyncio.run(extractor.main())
 
 
 manager = PortScannerManager()
