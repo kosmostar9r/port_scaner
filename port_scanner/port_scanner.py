@@ -43,8 +43,8 @@ class Extractor:
                     formated_url = url.replace('https://', '')
                     ip, port = formated_url.split(':')[0], formated_url.split(':')[1]
                     print(f'{ip} {port} OPEN')
-        except Exception:
-            pass
+        except Exception as exc:
+            print(f'denied with {exc}')
 
     async def main(self):
         self.format_hosts()
@@ -60,6 +60,6 @@ class Extractor:
 if __name__ == '__main__':
     start_ip = '192.168.1.0'
     end_ip = '192.168.1.255'
-    ports = [80, 443]
+    ports = [i for i in range(5000, 5701)]
     extr = Extractor(start_ip=start_ip, end_ip=end_ip, ports=ports)
     asyncio.run(extr.main())
